@@ -47,6 +47,7 @@ public class Main {
 
         System.out.println("Ejercicio 4 !");
 
+        ///--------Alta de productos
         Producto p1 = new Producto("AQ32","Leche",Marca.Cindor,200,600);
         Producto p2 = new Producto("WV54","Galletitas",Marca.Bagley,60,500);
         Producto p3 = new Producto("HIA90", "Yogurt",Marca.Granix,80,600);
@@ -59,7 +60,7 @@ public class Main {
         Producto p10 = new Producto("LQQ555","Fanta",Marca.Coca_Cola,60,100);
 
         Corralon corralon = new Corralon(); /** Creacion del corralon */
-/*
+
         corralon.agregarProducto(p1);
         corralon.agregarProducto(p2);
         corralon.agregarProducto(p3);
@@ -68,7 +69,7 @@ public class Main {
 
         System.out.println("Mostrando la lista de productos !!!");
         corralon.listarProductos();
-
+/*
         System.out.println("-----------------------");
         corralon.eliminarProducto();
 
@@ -78,9 +79,30 @@ public class Main {
         System.out.println("Buscando un producto");
         corralon.buscarProducto();
 */
-        ///------------Cliente
-        corralon.cargarCliente();
-        corralon.mostrarListaClientes();
+        /** Cliente*/
+
+        //-------------Alta de clientes
+        Empresa empresa1 = new Empresa(0,"Pepe", "Loco", "14-05-1999",22345142,417857454,4001,21,true);
+        Empresa empresa2 = new Empresa(1, "Ricardito", "Perez","20-03-2000",223656589,42514525,3009,30,true);
+        ConsumidorFinal consu1 = new ConsumidorFinal(2,"Diego", "Lopez", "03-05-2010",221545547,21142544,false);
+        ConsumidorFinal consu2 = new ConsumidorFinal(3,"Erika","Developer","10-10-2001",22584445,41052221,false);
+
+        corralon.agregarCliente(empresa1);
+        corralon.agregarCliente(empresa2);
+        corralon.agregarCliente(consu1);
+        corralon.agregarCliente(consu2);
+
+        ///corralon.cargarCliente();
+        ///corralon.mostrarListaClientes();
+
+
+        /** Probando de comprar un producto */
+        //int totalBruto = corralon.calcularTotalBruto();
+        //System.out.println("Total bruto: " + totalBruto);
+
+        /** Calculando el neto */
+        int Totalneto  = corralon.calcularTotalNeto(empresa1);
+        System.out.println("Total neto: " + Totalneto);
 
 
     }

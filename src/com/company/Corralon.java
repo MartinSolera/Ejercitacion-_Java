@@ -13,7 +13,7 @@ public class Corralon {
     private Set<Producto> listaProductos = new HashSet<>();
     private ArrayList<Cliente> listaClientes = new ArrayList<>();
 
-    private static int id = 0;
+    private static int id = 3;
 
     public Corralon(){
 
@@ -54,7 +54,7 @@ public class Corralon {
 
     }
 
-    public void buscarProducto(){
+    public boolean buscarProducto(){
         boolean encontrado = false;
         System.out.println("Ingrese el codigo del producto que quiere buscar");
         String codigo = sc.nextLine();
@@ -73,6 +73,8 @@ public class Corralon {
         if(encontrado == false){
             System.out.println("No se ha encontrado el codigo ingresado");
         }
+
+        return encontrado;
     }
 
     public int idAutoincremental(){
@@ -123,21 +125,17 @@ public class Corralon {
         }
     }
 
-
-
     public void mostrarConsFinal(Cliente c){
-        System.out.println("Lista de clientes");
         System.out.println("Id: " + c.getId() + " Nombre: " + c.getNombre() + " Apellido: " + c.getApellido() + " Fecha de nacimiento: " + c.getFechaNacimiento() + " Telefono: " + c.getTelefono() + " DNI: " + c.getDni());
     }
 
     public void mostrarEmpresa(Cliente c){
-        System.out.println("Lista de clientes");
         System.out.println("Id: " + c.getId() + " Nombre: " + c.getNombre() + " Apellido: " + c.getApellido() + " Fecha de nacimiento: " + c.getFechaNacimiento()
                 + " Telefono: " + c.getTelefono() + "DNI: " + c.getDni());
     }
 
-
 /** Aca estoy intentando de poder diferenciar si es empresa con un boleano, pero no logro separar en caso de que sea empresa para que muestre los valores de cuil y conIVA*/
+
     public void mostrarListaClientes(){
         for(int i=0;i<listaClientes.size();i++){
             if(listaClientes.get(i).isEmpresa() == true){
@@ -148,4 +146,76 @@ public class Corralon {
             }
         }
     }
+
+    public void agregarCliente(Cliente c){
+        listaClientes.add(c);
+    }
+
+    public Producto ordenProducto(){ ///Indica que producto quiere
+        System.out.println("Ingrese el codigo del producto que quiere ordenar");
+        String codigo = sc.nextLine();
+        Producto encontrado = null;
+
+        for(Producto p : listaProductos){
+            if(p.getCodigo().equals(codigo)){
+                mostrarProducto(p);
+
+                encontrado = p;
+                break;
+            }
+        }
+        if(encontrado == null){
+            System.out.println("No se ha encontrado el codigo ingresado");
+        }
+
+        return encontrado;
+    }
+
+    public int ordenarCantidad(){
+        int cantidad = 0;
+        if(ordenProducto() != null){
+            System.out.println("Ingrese la cantidad que requiere de este producto");
+            cantidad = sc.nextInt();
+        }
+        else{
+            System.out.println("No tenemos ningun producto con esta cantidad");
+        }
+        return cantidad;
+    }
+
+    public int calcularTotalBruto(){
+        Producto p = ordenProducto();
+        int cantidad =0;
+        int total =0;
+
+        if(p != null){
+            cantidad = ordenarCantidad();
+            total = 0;
+            if(cantidad != 0){
+                total = (int) (p.getPrecioUnitario() * cantidad);
+            }
+            else{
+                System.out.println("No tenemos stock disponible");
+            }
+        }
+        return total;
+    }
+
+    ///Calcular el total aplicando descuentos
+    public int calcularTotalNeto(Cliente c){
+        int bruto = calcularTotalBruto();
+        int neto =0;
+        if(c instanceof Empresa){
+            System.out.println("Se aplicó un 10% de descuento, por ser empresa");
+            int descuento = ((10 * bruto) / 100);
+            neto = bruto - descuento;
+        }
+        else{
+            System.out.println("Se aplicó un 15% de descuento, por ser consumidor final");
+            neto = ((15 * bruto) / 100);
+        }
+        return neto;
+    }
 }
+
+
